@@ -1,0 +1,172 @@
+{
+    "exportFormatVersion": 2,
+    "exportTime": "2025-09-18 10:49:12",
+    "containerVersion": {
+        "path": "accounts/6275314361/containers/209767474/versions/0",
+        "accountId": "6275314361",
+        "containerId": "209767474",
+        "containerVersionId": "0",
+        "container": {
+            "path": "accounts/6275314361/containers/209767474",
+            "accountId": "6275314361",
+            "containerId": "209767474",
+            "name": "test.com",
+            "publicId": "GTM-K6D23VLD",
+            "usageContext": [
+                "WEB"
+            ],
+            "fingerprint": "1743111515936",
+            "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/6275314361/containers/209767474/workspaces?apiLink=container",
+            "features": {
+                "supportUserPermissions": true,
+                "supportEnvironments": true,
+                "supportWorkspaces": true,
+                "supportGtagConfigs": false,
+                "supportBuiltInVariables": true,
+                "supportClients": false,
+                "supportFolders": true,
+                "supportTags": true,
+                "supportTemplates": true,
+                "supportTriggers": true,
+                "supportVariables": true,
+                "supportVersions": true,
+                "supportZones": true,
+                "supportTransformations": false
+            },
+            "tagIds": [
+                "GTM-K6D23VLD"
+            ]
+        },
+        "tag": [
+            {
+                "accountId": "6275314361",
+                "containerId": "209767474",
+                "tagId": "10",
+                "name": "UPD",
+                "type": "awud",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "userDataVariable",
+                        "value": "{{user - data | code}}"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enableConversionLinker",
+                        "value": "true"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "conversionId",
+                        "value": "1234"
+                    }
+                ],
+                "fingerprint": "1758190943436",
+                "firingTriggerId": [
+                    "8"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            }
+        ],
+        "trigger": [
+            {
+                "accountId": "6275314361",
+                "containerId": "209767474",
+                "triggerId": "8",
+                "name": "cE - wpform_submit",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "wpform_submit"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1758190897577"
+            }
+        ],
+        "variable": [
+            {
+                "accountId": "6275314361",
+                "containerId": "209767474",
+                "variableId": "6",
+                "name": "dLv - inputs",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "inputs"
+                    }
+                ],
+                "fingerprint": "1758190797452",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6275314361",
+                "containerId": "209767474",
+                "variableId": "7",
+                "name": "form - input | filter",
+                "type": "jsm",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "javascript",
+                        "value": "function() {\n  var formInputs = {{dLv - inputs}};\n\n  if (!formInputs) {\n    return undefined;\n  }\n\n  var foundEmail = null;\n  var foundPhone = null;\n\n  for (var key in formInputs) {\n    if (formInputs.hasOwnProperty(key)) {\n      var value = formInputs[key];\n\n      // Check if the value looks like an email address.\n      if (typeof value === 'string' && value.includes('@')) {\n        foundEmail = value.toLowerCase().trim();\n        // An email is top priority stop searching\n        break; \n      }\n      \n      //Looking for the phone number\n      if (!foundPhone && typeof value === 'string' && /^\\+?[0-9\\s\\-\\(\\)]{10,}$/.test(value)) {\n        \n        // --- Phone Number Sanitization ---\n        var cleanedPhone = value.replace(/[\\s\\-\\(\\)]/g, '');\n\n        if (cleanedPhone.startsWith('+')) {\n            foundPhone = cleanedPhone;\n        } else {\n            cleanedPhone = cleanedPhone.replace(/[^0-9]/g, '');\n            foundPhone = '+' + cleanedPhone;\n        }\n      }\n    }\n  }\n\n  // --- Prioritization Logic ---\n  \n  if (foundEmail) {\n    return {\n      'email': foundEmail\n    };\n  } else if (foundPhone) {\n    return {\n      'phone_number': foundPhone\n    };\n  }\n\n  return undefined;\n}"
+                    }
+                ],
+                "fingerprint": "1758192498003",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6275314361",
+                "containerId": "209767474",
+                "variableId": "9",
+                "name": "user - data | code",
+                "type": "awec",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "mode",
+                        "value": "CODE"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "dataSource",
+                        "value": "{{form - input | filter}}"
+                    }
+                ],
+                "fingerprint": "1758192442224",
+                "formatValue": {}
+            }
+        ],
+        "fingerprint": "1758192552219",
+        "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/6275314361/containers/209767474/versions/0?apiLink=version"
+    }
+}
